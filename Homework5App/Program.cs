@@ -138,8 +138,8 @@ namespace Homework5App
         {
             for(int i=1; size>i; i++)
             {
-                var key = array[i];
-                var j = i;
+                int key = array[i];
+                int j = i;
                 while ((j > 1) && (array[j - 1] > key))
                 {
                     int temp = array[j - 1];
