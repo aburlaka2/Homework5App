@@ -28,6 +28,10 @@ namespace Homework5App
                 QuickSort(first, last, array);
                 WriteArray(size, array);
             }
+            else if (choice == 3)
+            {
+                InsertionSort(size, array);
+            }
         }
 
         static int ArraySize()
@@ -64,9 +68,9 @@ namespace Homework5App
                 result2 = int.TryParse(Console.ReadLine(), out choice);
                 if (result2)
                 {
-                    if (choice < 1 || choice > 2)
+                    if (choice < 1 || choice > 3)
                     {
-                        Console.WriteLine("Нужно ввести число от 1 до 2");
+                        Console.WriteLine("Нужно ввести число от 1 до 3");
                         result2 = false;
                         continue;
                     }
@@ -146,6 +150,7 @@ namespace Homework5App
 
                 array[j] = key;
             }
+            WriteArray(size, array);
         }
 
     }
