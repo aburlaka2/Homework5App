@@ -6,32 +6,45 @@ namespace Homework5App
     {
         static void Main()
         {
-            Console.WriteLine("Эта программа сортирует массивы");
-            int size = ArraySize();
-            int[] array = new int[size];
-            Random rnd = new Random();
-            for (int i =0;i<size; i++)
+            bool repeat = true;
+            while (repeat)
             {
-                array[i] = rnd.Next(0, 99);
-            }
-            Console.WriteLine("Введённый вами массив");
-            WriteArray(size, array);
-            int choice = Choice();
-            if (choice == 1)
-            {
-                BubbleSort(size, array);
-            }
-            else if (choice == 2)
-            {
-                int first = 0;
-                int last = size - 1;
-                QuickSort(first, last, array);
+                Console.Clear();
+                Console.WriteLine("Эта программа сортирует массивы");
+                int size = ArraySize();
+                int[] array = new int[size];
+                Random rnd = new Random();
+                for (int i = 0; i < size; i++)
+                {
+                    array[i] = rnd.Next(0, 99);
+                }
+                Console.WriteLine("Исходный массив");
                 WriteArray(size, array);
+                int choice = Choice();
+                Console.Clear();
+                if (choice == 1)
+                {
+                    BubbleSort(size, array);
+                }
+                else if (choice == 2)
+                {
+                    int first = 0;
+                    int last = size - 1;
+                    QuickSort(first, last, array);
+                    WriteArray(size, array);
+                }
+                else if (choice == 3)
+                {
+                    InsertionSort(size, array);
+                }
+                else if (choice == 4)
+                {
+                    ShakerSort(size, array);
+                }
+                repeat = Repeat();
+                Console.Clear();
             }
-            else if (choice == 3)
-            {
-                InsertionSort(size, array);
-            }
+            
         }
 
         static int ArraySize()
@@ -62,15 +75,19 @@ namespace Homework5App
             {
                 Console.WriteLine("Выберите способ, которым хотите отсортировать массив по размеру");
                 Console.WriteLine("");
-                Console.WriteLine("1 - 'пузырьковый' способ");
+                Console.WriteLine("1 - 'пузырьковая' сортировка");
                 Console.WriteLine("");
-                Console.WriteLine("2 - 'быстрый' способ");
+                Console.WriteLine("2 - 'быстрая' сорировка");
+                Console.WriteLine("");
+                Console.WriteLine("3 - сорировка 'вставками'");
+                Console.WriteLine("");
+                Console.WriteLine("4 - сорировка перемешиванием");
                 result2 = int.TryParse(Console.ReadLine(), out choice);
                 if (result2)
                 {
-                    if (choice < 1 || choice > 3)
+                    if (choice < 1 || choice > 4)
                     {
-                        Console.WriteLine("Нужно ввести число от 1 до 3");
+                        Console.WriteLine("Нужно ввести число от 1 до 4");
                         result2 = false;
                         continue;
                     }
@@ -136,12 +153,15 @@ namespace Homework5App
         }
         static void InsertionSort(int size, int[] array)
         {
-            for(int i=1; size>i; i++)
+            for(int i=0; size>i; i++)
             {
                 int key = array[i];
                 int j = i;
-                while ((j > 1) && (array[j - 1] > key))
+                int count = 0;
+                while ((j > 0) && (array[j - 1] > key))
                 {
+                    count++;
+                    Console.WriteLine(count);
                     int temp = array[j - 1];
                     array[j - 1] = array[j];
                     array[j] = temp;
@@ -153,5 +173,64 @@ namespace Homework5App
             WriteArray(size, array);
         }
 
+        static void ShakerSort(int size, int[] array)
+        {
+            bool check = true;
+            while (check)
+            {
+                int temp;
+                check = false;
+                for (int i = 0; size-i > i; i++)
+                {
+                    if (array[i] > array[i + 1])
+                    {
+                        temp = array[i];
+                        array[i] = array[i + 1];
+                        array[i + 1] = temp;
+                        check = true;
+                    }
+                }
+                for (int i = size-1; size - i < i; i--)
+                {
+                    if (array[i] < array[i - 1])
+                    {
+                        temp = array[i-1];
+                        array[i-1] = array[i];
+                        array[i] = temp;
+                        check = true;
+                    }
+                }
+            }
+            WriteArray(size, array);
+        }
+        static bool Repeat()
+        {
+            bool repeat;
+            bool repeat2;
+            do
+            {
+                Console.WriteLine("Хотите ли продолжить работу с программой? д/н");
+                string repeatchar = Console.ReadLine();
+                if (repeatchar == "д")
+                {
+                    repeat = true;
+                    repeat2 = false;
+                }
+                else if (repeatchar == "н")
+                {
+                    repeat = false;
+                    repeat2 = false;
+                }
+                else
+                {
+                    Console.WriteLine("Ответьте 'д' или 'н'");
+                    repeat = true;
+                    repeat2 = true;
+                }
+            }
+            while (repeat2);
+            return repeat;
+
+        }
     }
 }
